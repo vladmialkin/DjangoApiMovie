@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'djoser',
     'django_filters',
     'drf_yasg',
+    'oauth2_provider',
+    'social_django',
+    'rest_framework_social_oauth2',
 
     'movies',
 ]
@@ -209,12 +212,14 @@ CKEDITOR_CONFIGS = {
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': (
-        'django_filters.rest_framework.DjangoFilterBackend',
-    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'rest_framework_social_oauth2.authentication.SocialAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
     ),
 }
 
@@ -252,3 +257,12 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = 'fTeOCDyFeaZ74DUdb4Mg'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'ec738ff1ec738ff1ec738ff15fef6440daeec73ec738ff18a7a90bef628518e9a3bc851'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.vk.VKOAuth2',
+    'rest_framework_social_oauth2.backends.DjangoOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
